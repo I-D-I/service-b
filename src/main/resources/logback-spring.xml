@@ -8,9 +8,7 @@
 		class="ch.qos.logback.core.ConsoleAppender">
 		<layout class="ch.qos.logback.classic.PatternLayout">
 			<Pattern>
-				%d{dd-MM-yyyy HH:mm:ss} [%thread] %-5level
-				[${serviceName},%X{X-B3-TraceId:-},%X{X-B3-SpanId:-},%X{X-Span-Export:-}]
-				%logger{40} - %msg%n
+				%d{dd-MM-yyyy HH:mm:ss} [%thread] %-5level [${serviceName:-service-b},%X{X-B3-TraceId:-},%X{X-B3-SpanId:-},%X{X-Span-Export:-}] %logger{40} - %msg%n
 			</Pattern>
 		</layout>
 	</appender>
@@ -37,16 +35,17 @@
 				<pattern>
 					<pattern>
 						{
-						"severity": "%level",
-						"serviceName": "${serviceName:-}",
-						"TraceId": "%X{X-B3-TraceId:-}",
-						"SpanId": "%X{X-B3-SpanId:-}",
-						"ParentId": "%X{X-B3-ParentSpanId:-}",
-						"exportable": "%X{X-Span-Export:-}",
+						"level": "%level",
+						"serviceName": "${serviceName:-service-c}",
+						"X-B3-TraceId": "%X{X-B3-TraceId:-}",
+						"X-B3-SpanId": "%X{X-B3-SpanId:-}",
+						"X-B3-ParentSpanId": "%X{X-B3-ParentSpanId:-}",
+						"X-Span-Export": "%X{X-Span-Export:-}",
 						"pid": "${PID:-}",
 						"thread": "%thread",
 						"class": "%logger{40}",
-						"message": "%message"
+						"message": "%message",
+						"error": "%rEx"
 						}
 					</pattern>
 				</pattern>

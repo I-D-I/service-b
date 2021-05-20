@@ -15,16 +15,26 @@ public class HelloServiceImpl implements HelloService {
     private RestTemplate myRestTemplate;
     
     @Value("${service-c.url}")
-    String url;
+    String urlServiceC;
+    
+    @Value("${service-python.url}")
+    String urlServicePython;
     
     @Autowired
     Tracer tracer;
 
-	public String helloDirect() {
+	public String helloDirect() throws Exception {
 		Span span = tracer.currentSpan();
 		span.tag("service", "entrada al servicio");
-		span.annotate(String.format("Llamada al servicio con url %s", url));
-		return myRestTemplate.getForEntity(url, String.class).getBody();
+		span.annotate(String.format("Llamada al servicio con url %s", urlServiceC));
+		
+		StringBuffer retornoServicios = new StringBuffer(myRestTemplate.getForEntity(urlServiceC, String.class).getBody());
+		
+		span.annotate(String.format("Llamada al servicio con url %s", urlServicePython));
+		
+		retornoServicios.append("\n").append(myRestTemplate.getForObject(urlServicePython, String.class));
+		
+		return retornoServicios.toString();
 	}
     
 }   

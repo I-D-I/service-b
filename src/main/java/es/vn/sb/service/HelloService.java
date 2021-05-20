@@ -2,6 +2,6 @@ package es.vn.sb.service;
 
 public interface HelloService {
 
-	public String helloDirect();
+	public String helloDirect() throws Exception;
 
 }
