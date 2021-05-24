@@ -14,7 +14,7 @@ USER root
 
 RUN apt update && apt install -y curl
 
-ENV JAEGER_SERVICE_NAME=service-a\
+ENV JAEGER_SERVICE_NAME=service-b\
   JAEGER_ENDPOINT=http://jaeger-collector.istio-system.svc.cluster.local:9411\
   JAEGER_PROPAGATION=b3\
   JAEGER_SAMPLER_TYPE=const\
