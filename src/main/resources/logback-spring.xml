@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
 
+	<include
+		resource="org/springframework/boot/logging/logback/defaults.xml" />
 	<springProperty scope="context" name="serviceName"
 		source="spring.application.name" />
 
@@ -8,56 +10,12 @@
 		class="ch.qos.logback.core.ConsoleAppender">
 		<layout class="ch.qos.logback.classic.PatternLayout">
 			<Pattern>
-				%d{dd-MM-yyyy HH:mm:ss} [%thread] %-5level [${serviceName:-service-b},%X{X-B3-TraceId:-},%X{X-B3-SpanId:-},%X{X-Span-Export:-}] %logger{40} - %msg%n
+				%d{dd-MM-yyyy HH:mm:ss} [%thread] %-5level [] [${serviceName:-service-b},%X{X-B3-TraceId:-},%X{X-B3-SpanId:-},%X{X-Span-Export:-}] %logger{40} - %msg - %rEx%n
 			</Pattern>
 		</layout>
 	</appender>
 
-	<appender name="ROLLING"
-		class="ch.qos.logback.core.rolling.RollingFileAppender">
-		<file>/var/folders/apps/service-b/service-b.log</file>
-		<rollingPolicy
-			class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
-			<!-- rollover daily -->
-			<fileNamePattern>service-b-%d{yyyy-MM-dd}.%i.log</fileNamePattern>
-			<!-- each file should be at most 10MB, keep 10 days worth of history, 
-				but at most 100MB -->
-			<maxFileSize>10MB</maxFileSize>
-			<maxHistory>10</maxHistory>
-			<totalSizeCap>100MB</totalSizeCap>
-		</rollingPolicy>
-<!-- 		<encoder class="net.logstash.logback.encoder.LogstashEncoder"/> -->
-		<encoder class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder">
-			<providers>
-				<timestamp>
-					<timeZone>Europe/Madrid</timeZone>
-				</timestamp>
-				<pattern>
-					<pattern>
-						{
-						"level": "%level",
-						"serviceName": "${serviceName:-service-c}",
-						"X-B3-TraceId": "%X{X-B3-TraceId:-}",
-						"X-B3-SpanId": "%X{X-B3-SpanId:-}",
-						"X-B3-ParentSpanId": "%X{X-B3-ParentSpanId:-}",
-						"X-Span-Export": "%X{X-Span-Export:-}",
-						"pid": "${PID:-}",
-						"thread": "%thread",
-						"class": "%logger{40}",
-						"message": "%message",
-						"error": "%rEx"
-						}
-					</pattern>
-				</pattern>
-			</providers>
-		</encoder>
-	</appender>
-
-	<root level="DEBUG">
-		<appender-ref ref="ROLLING" />
-	</root>
-
-	<root level="DEBUG">
+	<root level="INFO">
 		<appender-ref ref="CONSOLE" />
 	</root>
 

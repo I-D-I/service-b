@@ -1,0 +1,78 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: service-b-deploy
+  namespace: dev
+  labels:
+    app: service-b
+    k8s-app: service-b
+    version: v1
+spec:
+  replicas: 1
+  revisionHistoryLimit: 3
+  selector:
+    matchLabels:
+      app: service-b
+      k8s-app: service-b
+      version: v1
+  template:
+    metadata:
+      labels:
+        app: service-b
+        k8s-app: service-b
+        version: v1
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/path: "/service-b/actuator/prometheus"
+        prometheus.io/port: "8080"
+        prometheus.io/scheme: "http"
+        sidecar.istio.io/inject: "true"
+    spec:
+      containers:
+      - name: service-b
+        image: de.icr.io/appops/service-b:1.0.0
+        imagePullPolicy: Always
+        envFrom:
+        - configMapRef:
+            name: service-b-cm
+        ports:
+        - containerPort: 8080
+          name: http-port
+        readinessProbe:
+          tcpSocket:
+            port: 8080
+          periodSeconds: 10
+          initialDelaySeconds: 30
+          timeoutSeconds: 5
+        livenessProbe:
+          httpGet:
+            path: /service-b/actuator/health
+            port: 8080
+          periodSeconds: 10
+          initialDelaySeconds: 40
+          timeoutSeconds: 5
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      terminationGracePeriodSeconds: 30
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: service-b-svc
+  namespace: dev  
+  labels:
+    app: service-b
+    k8s-app: service-b
+spec:
+  ports:
+  - port: 80
+    targetPort: 8080
+    name: http-port
+    protocol: TCP
+  selector:
+    app: service-b
+    k8s-app: service-b
