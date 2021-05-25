@@ -67,6 +67,7 @@ metadata:
   labels:
     app: service-b
     k8s-app: service-b
+    version: v1
 spec:
   ports:
   - port: 80
@@ -76,3 +77,4 @@ spec:
   selector:
     app: service-b
     k8s-app: service-b
+    version: v1
