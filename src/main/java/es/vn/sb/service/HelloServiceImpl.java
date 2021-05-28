@@ -30,9 +30,9 @@ public class HelloServiceImpl implements HelloService {
 		
 		StringBuffer retornoServicios = new StringBuffer(myRestTemplate.getForEntity(urlServiceC, String.class).getBody());
 		
-		//span.annotate(String.format("Llamada al servicio con url %s", urlServicePython));
+		span.annotate(String.format("Llamada al servicio con url %s", urlServicePython));
 		
-		//retornoServicios.append("\n").append(myRestTemplate.getForObject(urlServicePython, String.class));
+		retornoServicios.append("\n").append(myRestTemplate.getForObject(urlServicePython, String.class));
 		
 		return retornoServicios.toString();
 	}
