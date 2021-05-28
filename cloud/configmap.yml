@@ -8,8 +8,8 @@ data:
   SPRING_PROFILES_ACTIVE: dev
   TZ: 'Europe/Madrid'
   TRACES_ENDPOINT: 'http://jaeger-collector.istio-system.svc.cluster.local:9411'
-  SERVICE_C_HELLO_URL: 'http://service-c-svc/service-c/hello/direct'
-  SERVICE_C_USER_URL: 'http://service-c-svc/service-c/user/'
-  SERVICE_C_USERS_URL: 'http://service-c-svc/service-c/user/users'
-  SERVICE_PYTHON_1_URL: 'http://service-python-1-svc/service-python-1/'
+  SERVICE_C_HELLO_URL: 'http://gateway-svc/service-c/hello/direct'
+  SERVICE_C_USER_URL: 'http://gateway-svc/service-c/user/'
+  SERVICE_C_USERS_URL: 'http://gateway-svc/service-c/user/users'
+  SERVICE_PYTHON_1_URL: 'http://gateway-svc/service-python-1/'
   
