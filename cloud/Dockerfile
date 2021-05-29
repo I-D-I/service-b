@@ -13,15 +13,11 @@ FROM openjdk:11-jre-slim
 USER root
 
 RUN apt update && apt install -y curl
-
-ENV JAEGER_SERVICE_NAME=service-b\
-  JAEGER_ENDPOINT=http://jaeger-collector.istio-system.svc.cluster.local:9411\
-  JAEGER_PROPAGATION=b3\
-  JAEGER_SAMPLER_TYPE=const\
-  JAEGER_SAMPLER_PARAM=1
   
 EXPOSE 8080
   
 COPY --from=builder /app/target/*.jar /app.jar
+
+HEALTHCHECK CMD curl --fail http://localhost:8080/service-b/actuator/health || exit 1
 
 CMD ["java", "-jar", "/app.jar"]
