@@ -20,6 +20,9 @@ public class HelloServiceImpl implements HelloService {
     @Value("${service-python-1.url}")
     String urlServicePython;
     
+    @Value("${service-qk-1.url}")
+    String urlServiceQuarkus;
+    
     @Autowired
     Tracer tracer;
 
@@ -32,7 +35,8 @@ public class HelloServiceImpl implements HelloService {
 		
 		span.annotate(String.format("Llamada al servicio con url %s", urlServicePython));
 		
-		retornoServicios.append("\n").append(myRestTemplate.getForObject(urlServicePython, String.class));
+		//retornoServicios.append("\n").append(myRestTemplate.getForObject(urlServicePython, String.class));
+		retornoServicios.append("\n").append(myRestTemplate.getForObject(urlServiceQuarkus, String.class));
 		
 		return retornoServicios.toString();
 	}

@@ -12,4 +12,5 @@ data:
   SERVICE_C_USER_URL: 'http://gateway-svc/service-c/user/'
   SERVICE_C_USERS_URL: 'http://gateway-svc/service-c/user/users'
   SERVICE_PYTHON_1_URL: 'http://gateway-svc/service-python-1/'
+  SERVICE_QK_1_URL: 'http://gateway-svc/service-qk1/hello/direct'
   
