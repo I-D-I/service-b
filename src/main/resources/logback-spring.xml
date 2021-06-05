@@ -17,6 +17,7 @@
 					<pattern>
 						{
 						"severity": "%level",
+						"level": "%level",
 						"serviceName": "${serviceName:-service-b}",
 						"TraceId": "%X{X-B3-TraceId:-}",
 						"SpanId": "%X{X-B3-SpanId:-}",
