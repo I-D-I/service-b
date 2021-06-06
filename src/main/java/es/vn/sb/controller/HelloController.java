@@ -94,12 +94,12 @@ public class HelloController {
 			span.annotate("Petición con error hacia servicio-c");
 			logger.error(String.format("Exception: %s", e.getLocalizedMessage()));
 			return new ResponseEntity<String>(String.format("KO from '%s', version '%s'\t%s", appName,
-					appVersion, "ERROR en el flujo de peticiones llamando al service-c/service-python-1"), e.getStatusCode());
+					appVersion, "ERROR en el flujo de peticiones llamando al service-c"), e.getStatusCode());
 		} catch (Exception e) {
 			span.annotate("Petición con error hacia servicio-c");
 			logger.error(String.format("Exception: %s", e.getLocalizedMessage()));
 			return new ResponseEntity<String>(String.format("KO from '%s', version '%s'\t'%s'", appName,
-					appVersion, "ERROR en el flujo de peticiones llamando al service-c/service-python-1"), HttpStatus.SERVICE_UNAVAILABLE);
+					appVersion, "ERROR en el flujo de peticiones llamando al service-c"), HttpStatus.SERVICE_UNAVAILABLE);
 		}
 	}
 
